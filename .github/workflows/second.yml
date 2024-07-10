@@ -41,12 +41,13 @@ jobs:
                   pull_number: pr.number,
                 });
                 //console.log(pullRequest.html_url);
-                github.rest.issues.removeLabel({
+                let xxx = await github.rest.issues.removeLabel({
                   owner,
                   repo,
                   issue_number: pr.number,
                   name: "auto-merge-after-CI",
                 });
+                console.log(xxx);
 
                 output += "Found [PR " + pr.number + "](" + pullRequest.html_url + "). "
               }
