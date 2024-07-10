@@ -7,8 +7,8 @@ on:
     workflows: ["continuous integration"]
     types:
       - completed
-    branches:
-      - 'update-dependencies-**'
+    # branches:
+      # - 'update-dependencies-**'
 
 jobs:
   monitor-failures:
