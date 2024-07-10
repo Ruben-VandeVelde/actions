@@ -27,6 +27,7 @@ jobs:
         with:
           result-encoding: string
           script: |
+            let output = "❌ `lake update` [failed](" + context.payload.workflow_run.html_url + "). "
             console.log(context.payload.workflow_run.html_url)
             console.log()
             console.log(context.payload.workflow_run.pull_requests)
@@ -39,12 +40,11 @@ jobs:
                   pull_number: pr.number,
                 });
                 console.log(pullRequest.html_url);
-
+                output += "Found [PR " + pr.number + "](" + pullRequest.html_url + "). "
               }
             } else {
-              console.log("No PR found!")
+              output += "No PR found for this run!";
             }
-            output = "test";
             return output;
 
       - name: Get result
