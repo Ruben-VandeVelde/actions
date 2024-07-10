@@ -27,19 +27,27 @@ jobs:
         with:
           result-encoding: string
           script: |
+            const owner = context.repo.owner, repo = context.repo.repo;
             let output = "❌ `lake update` [failed](" + context.payload.workflow_run.html_url + "). "
-            console.log(context.payload.workflow_run.html_url)
-            console.log()
-            console.log(context.payload.workflow_run.pull_requests)
+            //console.log(context.payload.workflow_run.html_url)
+            //console.log()
+            //console.log(context.payload.workflow_run.pull_requests)
             let prs = context.payload.workflow_run.pull_requests
             if (prs.length) {
               for (let pr of prs) {
                 const { data: pullRequest } = await github.rest.pulls.get({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
+                  owner,
+                  repo,
                   pull_number: pr.number,
                 });
-                console.log(pullRequest.html_url);
+                //console.log(pullRequest.html_url);
+                github.rest.issues.removeLabel({
+                  owner,
+                  repo,
+                  issue_number: pr.number,
+                  "auto-merge-after-CI",
+                });
+
                 output += "Found [PR " + pr.number + "](" + pullRequest.html_url + "). "
               }
             } else {
