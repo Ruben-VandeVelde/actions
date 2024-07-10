@@ -17,4 +17,6 @@ jobs:
 
     steps:
       - name: Dump
-        run: echo "${{ github.event.workflow_run }}"
+        uses: actions/github-script@v7
+        with:
+          script: console.log(context)
