@@ -45,7 +45,7 @@ jobs:
                   owner,
                   repo,
                   issue_number: pr.number,
-                  "auto-merge-after-CI",
+                  name: "auto-merge-after-CI",
                 });
 
                 output += "Found [PR " + pr.number + "](" + pullRequest.html_url + "). "
